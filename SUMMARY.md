@@ -5,3 +5,5 @@
     * [Challanges](dsa/math/challanges.md)
   * [Array](dsa/array.md)
   * [Binary Search](dsa/binary-search.md)
+  * [Recursion](dsa/recursion.md)
+* [Sorting](sorting.md)
