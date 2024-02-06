@@ -1,5 +1,7 @@
 ---
-description: Array and Object are the backbone
+description: >-
+  An array is a collection of items of the same data type stored at contiguous
+  memory locations.
 cover: >-
   https://images.unsplash.com/photo-1561117089-3fb7c944887f?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHwzfHxBcnJheXxlbnwwfHx8fDE3MDcxOTQ0OTR8MA&ixlib=rb-4.0.3&q=85
 coverY: 0
@@ -459,5 +461,49 @@ Before Rotation
 1 2 3 4 5 
 After Rotation
 2 3 4 5 1 
+
+```
+
+<mark style="color:red;">**Find the occurrence of an integer in the array**</mark>
+
+To find the occurrence of an integer in an array, you can iterate through the array and count how many times the integer appears.
+
+To find a <mark style="color:orange;">**subarray with a given sum in an array**</mark>, you can use the sliding window technique. Here's a JavaScript function to accomplish this
+
+
+
+```javascript
+function subarrayWithGivenSum(arr, targetSum) {
+    let start = 0;
+    let end = 0;
+    let currentSum = 0;
+
+    while (end < arr.length) {
+        // Add the current element to the current sum
+        currentSum += arr[end];
+
+        // If the current sum exceeds the target sum, remove elements from the start
+        while (currentSum > targetSum && start <= end) {
+            currentSum -= arr[start];
+            start++;
+        }
+
+        // If the current sum equals the target sum, return the indices of the subarray
+        if (currentSum === targetSum) {
+            return [start, end];
+        }
+
+        // Move the end pointer to the next element
+        end++;
+    }
+
+    // If no subarray with the target sum is found, return [-1, -1]
+    return [-1, -1];
+}
+
+// Example usage:
+let array = [1, 4, 20, 3, 10, 5];
+let targetSum = 33;
+console.log("Indices of subarray with given sum:", subarrayWithGivenSum(array, targetSum));
 
 ```

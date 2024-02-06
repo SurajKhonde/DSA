@@ -4,7 +4,7 @@ cover: >-
 coverY: 0
 ---
 
-# Sorting
+# Sorting Array
 
 <mark style="color:red;">**Introduction to Sorting**</mark>
 
@@ -127,50 +127,145 @@ Stability in Sorting Algorithm
 
 Stability is mainly essential when we have key-value pairs with duplicate keys possible (like people's names as keys and their details as values). And we wish to sort these objects by keys.
 
-### **What is a stable sorting algorithm?**&#x20;
+<mark style="color:red;">**Quicksort**</mark><mark style="color:red;">:</mark> Quicksort is generally considered one of the fastest sorting algorithms for most practical data sets. It has an average-case time complexity of O(n log n) and performs well on average and best-case scenarios. However, in the worst-case scenario (e.g., if the pivot selection is poor), it can degrade to O(n^2).
 
-> A sorting algorithm is said to be stable if two objects with equal keys appear in the same order in sorted output as they appear in the input data set
+###
 
-Formally stability may be defined as, how the algorithm treats equal elements. Let **A\[]** be an array, and let **'<'** be a strict weak ordering on the elements of A\[].  A sorting algorithm is stable if: �<�����\[�]≡�\[�]��������(�)<�(�)where �is the sorting permutation ( sorting moves �\[�]to position �(�)) .
+```javascript
+function quickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
 
-Informally, stability means that equivalent elements retain their relative positions, after sorting.
+    const pivot = arr[Math.floor(arr.length / 2)]; // Choose the pivot element
+    const left = [];
+    const right = [];
 
-<figure><img src="https://media.geeksforgeeks.org/wp-content/uploads/20220825145858/del.png" alt="Example of stable sort"><figcaption><p>Example of stable sort</p></figcaption></figure>
+    for (let i = 0; i < arr.length; i++) {
+        if (i === Math.floor(arr.length / 2)) {
+            continue; // Skip pivot element
+        }
+        if (arr[i] < pivot) {
+            left.push(arr[i]); // Elements smaller than pivot go to the left
+        } else {
+            right.push(arr[i]); // Elements greater than pivot go to the right
+        }
+    }
 
-### **Do we care for simple arrays like the array of integers?**&#x20;
+    return [...quickSort(left), pivot, ...quickSort(right)]; // Recursively sort left and right parts
+}
 
-When equal elements are indistinguishable, such as with integers, or more generally, any data where the entire element is the key, stability is not an issue. Stability is also not an issue if all keys are different.
+// Example usage:
+let array = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+console.log("Original array:", array);
+console.log("Sorted array:", quickSort(array));
 
-### Where stable sorting algorithms are useful?
+```
 
-&#x20;Consider the following dataset of Student Names and their respective class sections.
+<mark style="color:red;">**Mergesort**</mark> is another efficient sorting algorithm with a guaranteed <mark style="color:purple;">**worst-case time complexity of O(n log n).**</mark> It is a stable sorting algorithm and <mark style="color:blue;">works well for large data sets, but it requires additional space proportional to the size of the input array.</mark>
 
-&#x20;(����,�)(�����,�)(���,�)(����,�)(�����,�)
 
-If we sort this data according to name only, then it is highly unlikely that the resulting dataset will be grouped according to sections as well.&#x20;
 
-(�����,�)(�����,�)(����,�)(����,�)(���,�)
+```javascript
+function quickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
 
-So we might have to sort again to obtain the list of students section-wise too. But in doing so, if the sorting algorithm is not stable, we might get a result like this:
+    const pivot = arr[Math.floor(arr.length / 2)]; // Choose the pivot element
+    const left = [];
+    const right = [];
 
-(�����,�)(����,�)(���,�)(����,�)(�����,�)
+    for (let i = 0; i < arr.length; i++) {
+        if (i === Math.floor(arr.length / 2)) {
+            continue; // Skip pivot element
+        }
+        if (arr[i] < pivot) {
+            left.push(arr[i]); // Elements smaller than pivot go to the left
+        } else {
+            right.push(arr[i]); // Elements greater than pivot go to the right
+        }
+    }
 
-The dataset is now sorted according to sections, but not according to names. In the name-sorted dataset, the tuple (Alice, B) was before (Eric, B) , but since the sorting algorithm is not stable, the relative order is lost. If on the other hand, we used a stable sorting algorithm, the result would be:
+    return [...quickSort(left), pivot, ...quickSort(right)]; // Recursively sort left and right parts
+}
 
-(�����,�)(����,�)(���,�)(�����,�)(����,�)
+// Example usage:
+let array = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+console.log("Original array:", array);
+console.log("Sorted array:", quickSort(array));
 
-Here the relative order between different tuples is maintained. It may be the case that the relative order is maintained in an Unstable Sort but that is highly unlikely.
+```
 
-### **Which sorting algorithms are stable?**&#x20;
+<mark style="color:red;">**min-heap and max-heap**</mark>
 
-Some Sorting Algorithms are stable by nature, such as [Bubble Sort](https://www.geeksforgeeks.org/bubble-sort/), [Insertion Sort](https://www.geeksforgeeks.org/insertion-sort/), [Merge Sort](https://www.geeksforgeeks.org/merge-sort/), [Count Sort,](https://www.geeksforgeeks.org/counting-sort/) etc. Comparison-based stable sorts such as Merge Sort and Insertion Sort maintain stability by ensuring that- Element �\[�]comes before �\[�]if and only if �\[�]<�\[�], here i, j are indices, and �<�. The relative order is preserved![if A\[i\]\equiv A\[j\]](https://www.geeksforgeeks.org/wp-content/ql-cache/quicklatex.com-0e0a7d4effb5635dcf90e9fb593eae45\_l3.svg)i.e.![A\[i\]](https://www.geeksforgeeks.org/wp-content/ql-cache/quicklatex.com-4aaff26b720cb0edd0e2c823272f04f4\_l3.svg)comes before![A\[j\]](https://www.geeksforgeeks.org/wp-content/ql-cache/quicklatex.com-bc58c90c6b04b4eeb97e44b1e6fef88d\_l3.svg).&#x20;
+You can find the kth largest and kth smallest numbers in an array using various approaches, such as sorting the array or using data structures like heaps. Here, I'll provide two different methods: one using sorting and another using a min-heap and max-heap.
 
-Other non-comparison-based sorts such as [Counting Sort](https://www.geeksforgeeks.org/counting-sort/) maintain stability by ensuring that the Sorted Array is filled in reverse order so that elements with equivalent keys have the same relative position. Some sorts such as [Radix Sort](https://www.geeksforgeeks.org/radix-sort/) depend on another sort, with the only requirement that the other sort should be stable.
 
-### **Which sorting algorithms are unstable?**&#x20;
 
-[Quick Sort](https://www.geeksforgeeks.org/quick-sort/), [Heap Sort](https://www.geeksforgeeks.org/heap-sort/) etc., can be made stable by also taking the position of the elements into consideration. This change may be done in a way that does not compromise a lot on the performance and takes some extra space, possibly �(�).
+```javascript
+function findKthLargestAndSmallest(array, k) {
+    if (k < 1 || k > array.length) {
+        return "Invalid value of k";
+    }
 
-### **Can we make any sorting algorithm stable?**&#x20;
+    const sortedArray = array.slice().sort((a, b) => b - a); // Sort the array in descending order
+    const kthLargest = sortedArray[k - 1];
+    const kthSmallest = sortedArray[array.length - k];
+    return { kthLargest, kthSmallest };
+}
 
-Any given sorting algorithm which is not stable can be modified to be stable. There can be algorithm-specific ways to make it stable, but in general, any comparison-based sorting algorithm which is not stable by nature can be modified to be stable by changing the key comparison operation so that the comparison of two keys considers position as a factor for objects with equal keys.
+// Example usage:
+let array = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+let k = 3;
+console.log(`Kth Largest and Kth Smallest:`, findKthLargestAndSmallest(array, k));
+
+```
+
+You can sort an array of 0s, 1s, and 2s, also known as a Dutch National Flag problem, using the **Dutch National Flag Algorithm**. This algorithm sorts the array in a single pass, without using any additional space. Here's how you can implement it in JavaScript
+
+
+
+```javascript
+function sort012(arr) {
+    let low = 0;
+    let mid = 0;
+    let high = arr.length - 1;
+
+    while (mid <= high) {
+        switch (arr[mid]) {
+            case 0:
+                [arr[low], arr[mid]] = [arr[mid], arr[low]];
+                low++;
+                mid++;
+                break;
+            case 1:
+                mid++;
+                break;
+            case 2:
+                [arr[mid], arr[high]] = [arr[high], arr[mid]];
+                high--;
+                break;
+        }
+    }
+}
+
+// Example usage:
+let array = [0, 1, 2, 1, 0, 2, 1, 0];
+console.log("Original array:", array);
+sort012(array);
+console.log("Sorted array:", array);
+
+```
+
+In this implementation:
+
+* We maintain three pointers: `low`, `mid`, and `high`.
+* `low` points to the next position where a 0 should be placed.
+* `mid` is used to iterate through the array.
+* `high` points to the next position where a 2 should be placed.
+* We iterate through the array using the `mid` pointer.
+* If `arr[mid]` is 0, we swap it with `arr[low]` and increment both `low` and `mid`.
+* If `arr[mid]` is 1, we simply move to the next element by incrementing `mid`.
+* If `arr[mid]` is 2, we swap it with `arr[high]` and decrement `high`. We don't increment `mid` in this case because we need to recheck the value at `arr[mid]` after the swap, as the swapped value may be 0 or 1.
+* By the end of the iteration, the array will be sorted with 0s, 1s, and 2s grouped together.
