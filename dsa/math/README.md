@@ -1,12 +1,29 @@
 ---
 description: how handle Mat
+cover: >-
+  https://images.unsplash.com/photo-1635070041409-e63e783ce3c1?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHw0fHxNYXRofGVufDB8fHx8MTcwNzE5NzE2OXww&ixlib=rb-4.0.3&q=85
+coverY: 0
+layout:
+  cover:
+    visible: true
+    size: full
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
 # Math
 
-Count Digits
+<mark style="color:red;">**Count Digits**</mark>
 
-Given a number N, the task is to return the count of digits in this number.
+<mark style="color:green;">**Given a number N, the task is to return the count of digits in this number.**</mark>
 
 ### **Simple Iterative Solution to count digits in an integer**
 
@@ -216,8 +233,6 @@ At some point, one number becomes factor of the other so instead of repeatedly s
 likewise  when a=36  & b=60  ,here b>a  so b = 24 & a= 36 but a%b!=0.  Now a>b so a= 12 & b= 24  . and b%a==0. smaller among a and b is 12  which becomes  HCF of 36 and 60.  &#x20;
 
 The idea is, GCD of two numbers doesn’t change if a smaller number is subtracted from a bigger number.&#x20;
-
-Javascript
 
 ```javascript
 // JavaScript program to find GCD of two numbers
