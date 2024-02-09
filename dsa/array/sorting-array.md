@@ -269,3 +269,257 @@ In this implementation:
 * If `arr[mid]` is 1, we simply move to the next element by incrementing `mid`.
 * If `arr[mid]` is 2, we swap it with `arr[high]` and decrement `high`. We don't increment `mid` in this case because we need to recheck the value at `arr[mid]` after the swap, as the swapped value may be 0 or 1.
 * By the end of the iteration, the array will be sorted with 0s, 1s, and 2s grouped together.
+
+#### _<mark style="color:red;">Check if array is sorted and rotated</mark>_
+
+Given an array **arr\[]** of **N** distinct integers, check if this array is **Sorted (non-increasing or non-decreasing)** and **Rotated** counter-clockwise. Note that input array may be sorted in either increasing or decreasing order, then rotated.\
+A sorted array is not considered as sorted and rotated, i.e., there should be at least **one** rotation.
+
+<pre><code><strong>Input:
+</strong>N = 4
+arr[] = {3,4,1,2}
+<strong>Output: Yes
+</strong><strong>Explanation: The array is sorted 
+</strong>(1, 2, 3, 4) and rotated twice 
+(3, 4, 1, 2).
+</code></pre>
+
+\
+
+
+```javascript
+class Solution {
+    //Function to check if array is sorted in increasing order and rotated.
+    II (arr, n)
+    {
+    	let i = 0;
+    	//We use a loop to check whether elements are in increasing order and 
+	    //stop at position where we find a smaller number than previous one.
+    	while (i < n - 1 && arr[i] <= arr[i + 1]) i++;
+    	//If we reach the end of the array, we return false.
+    	if (i == n - 1) return false;
+    
+    	i++;
+    	//Now we check whether all remaining elements are in increasing order.
+    	while (i < n - 1 && arr[i] <= arr[i + 1]) i++;
+    	
+    	//If we reach the end and the last element is smaller than or equal to
+    	//first element we return true else we return false.
+    	if (i == n - 1 && arr[n - 1] <= arr[0])
+    		return true;
+    	else
+    		return false;
+    }
+    
+    DD (arr, n)
+    {
+    	let i = 0;
+    	//We use a loop to check whether elements are in decreasing order and 
+        //stop at position where we find a smaller number than next one.
+    	while (i < n - 1 && arr[i] >= arr[i + 1]) i++;
+    	
+    	//If we reach the end of the array, we return false.
+    	if (i == n - 1) return false;
+    
+    	i++;
+    	//Now we check whether all remaining elements are in decreasing order.
+    	while (i < n - 1 && arr[i] >= arr[i + 1]) i++;
+    	
+    	//If we reach the end and the last element is larger than or equal to 
+        //first element we return true else we return false.
+    	if (i == n - 1 && arr[n - 1] >= arr[0])
+    		return true;
+    	else
+    		return false;
+    }
+    checkRotatedAndSorted(arr, num)
+    {
+        //returning true if any of the two function gives true.
+        return (this.II(arr, num) || this.DD(arr, num));
+    }
+}
+```
+
+#### <mark style="color:red;">Reverse array in groups</mark>
+
+<pre><code><strong>Input:
+</strong>N = 4, K = 3
+arr[] = {5,6,8,9}
+<strong>Output: 8 6 5 9
+</strong></code></pre>
+
+**Example 2:**
+
+<pre><code><strong>Input:
+</strong>N = 5, K = 3
+arr[] = {1,2,3,4,5}
+<strong>Output: 3 2 1 5 4
+</strong><strong>Explanation: First group consists of elements
+</strong>1, 2, 3. Second group consists of 4,5.
+</code></pre>
+
+**Example 1:**
+
+**Note:** If at any instance, there are no more subarrays of size greater than or equal to K, then reverse the last subarray (irrespective of its size). You shouldn't return any array, modify the given array in-place.
+
+Given an array arr\[] of positive integers of size N. Reverse every sub-array group of size K.
+
+\
+
+
+```javascript
+class Solution {
+    // Function to reverse a sub-array from index start to end
+    reverse(arr, start, end) {
+        while (start < end) {
+            const temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    // Function to reverse every sub-array group of size k
+    reverseInGroups(arr, n, k) {
+        let start = 0;
+        while (start < n) {
+            let end = Math.min(start + k - 1, n - 1);
+            this.reverse(arr, start, end); // Call reverse using `this` keyword
+            start += k;
+        }
+    }
+}
+```
+
+#### <mark style="color:red;">Rearrange an array with O(1) extra space</mark>
+
+Given an array **arr\[]** of size **N** where every element is in the range from **0 to n-1**. Rearrange the given array so that the transformed array **arrT\[i]** becomes **arr\[arr\[i]]**.
+
+**NOTE:** **arr** and **arrT** are both same variables, representing the array before and after transformation respectively.
+
+**Example 1:**\
+
+
+<pre><code><strong>Input:
+</strong>N = 2
+arr[] = {1,0}
+<strong>Output: 0 1
+</strong><strong>Explanation: 
+</strong>arr[arr[0]] = arr[1] = 0
+arr[arr[1]] = arr[0] = 1
+So, arrT becomes {0, 1}
+</code></pre>
+
+**Example 2:**
+
+<pre><code><strong>Input:
+</strong>N = 5
+arr[] = {4,0,2,1,3}
+<strong>Output: 3 4 2 0 1
+</strong><strong>Explanation: 
+</strong>arr[arr[0]] = arr[4] = 3
+arr[arr[1]] = arr[0] = 4
+arr[arr[2]] = arr[2] = 2
+arr[arr[3]] = arr[1] = 0
+arr[arr[4]] = arr[3] = 1
+and so on
+So, arrT becomes {3, 4, 2, 0, 1}
+</code></pre>
+
+
+
+```javascript
+class Solution {
+    //Function to rearrange an array so that arr[i] becomes arr[arr[i]]
+    //with O(1) extra space.
+    arrange(arr, n){
+        let i;
+    
+        //Increasing all values by (arr[arr[i]]%n)*n to store the new element.
+        for(i=0;i<n;i++){
+            arr[i]+=(arr[arr[i]]%n)*n;
+        }
+        
+        //Since we had multiplied each element with n.
+        //We will divide by n too to get the new element at that 
+        //position after rearranging.
+        for(i=0;i<n;i++){
+            arr[i]=Math.floor(arr[i]/n);
+        }
+    }
+}
+```
+
+Given an array **arr\[]** of size **N** and two elements **x** and **y**, use counter variables to find which element appears most in the array. If both elements have the same frequency, then return the smaller element.\
+**Note:**  We need to return the element, not its count.
+
+&#x20;
+
+**Example 1:**
+
+<pre><code><strong>Input:
+</strong>N = 11
+arr[] = {1,1,2,2,3,3,4,4,4,4,5}
+x = 4, y = 5
+<strong>Output: 4
+</strong><strong>Explanation: 
+</strong>frequency of 4 is 4.
+frequency of 5 is 1.
+</code></pre>
+
+&#x20;
+
+**Example 2:**
+
+<pre><code><strong>Input:
+</strong>N = 8
+arr[] = {1,2,3,4,5,6,7,8}
+x = 1, y = 7
+<strong>Output: 1
+</strong><strong>Explanation: 
+</strong>frequency of 1 is 1.
+frequency of 7 is 1.
+Since 1 &#x3C; 7, return 1.
+</code></pre>
+
+&#x20;
+
+**Your Task:**\
+You don't need to read input or print anything. Complete the function **majorityWins()** that takes **array, n, x, y** as input parameters and return the element with higher frequency.
+
+&#x20;
+
+**Expected Time Complexity:** O(N)\
+**Expected Auxiliary Space:** O(1)
+
+<mark style="color:orange;">**solution**</mark>
+
+
+
+```javascript
+class Solution {
+    // Function to find element with more appearances between two elements in an
+    // array.
+    majorityWins(arr, n, x, y) {
+        let countX = 0;
+        let countY = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === x) {
+                countX++;
+            } else if (arr[i] === y) {
+                countY++;
+            }   
+        }
+
+        if (countX > countY) {
+            return x;
+        } else if (countY > countX) {
+            return y;
+        } else {
+            return Math.min(x, y);
+        }
+            }
+    }
+```

@@ -714,5 +714,85 @@ console.log(countOnes(arr, n));
 **Time complexity:** O(Log(N))\
 **Auxiliary Space:** O(1)
 
+&#x20;
+
+<mark style="color:red;">**Given an array arr\[] of size N, find the smallest positive number missing from the array.**</mark>
+
+&#x20;
+
+**Example 1:**
+
+<pre><code><strong>Input:
+</strong>N = 5
+arr[] = {1,2,3,4,5}
+<strong>Output: 6
+</strong><strong>Explanation: Smallest positive missing
+</strong>number is 6.
+</code></pre>
+
+&#x20;**Example 2:**
+
+<pre><code><strong>Input:
+</strong>N = 5
+arr[] = {0,-10,1,3,-20}
+<strong>Output: 2
+</strong></code></pre>
+
+**first Push all Non-Positive Numbers to left side the**&#x20;
+
+```javascript
+function AllNegative(){
+    const n = arr.length;
+    let shift = 0;
+    for (let i = 0; i < n; i++) {
+        if (arr[i] <= 0) {
+            const temp = arr[i];
+            arr[i] = arr[shift];
+            arr[shift] = temp;
+            shift++;
+    }
+}
+```
+
+But we have a use Set to set A Array that we push non negative number and try t find missing number.
+
+
+
+```javascript
+function smallestMissingPositive(arr) {
+    const positiveSet = new Set();
+
+    // Step 1: Separate positive integers from non-positive integers
+    for (const num of arr) {
+        if (num > 0) {
+            positiveSet.add(num);
+        }
+    }
+
+    // Step 2 & 3: Iterate over positive integers and check presence
+    for (let i = 1; i <= arr.length + 1; i++) {
+        if (!positiveSet.has(i)) {
+            return i;
+        }
+    }
+
+    // If all positive integers up to length+1 are present
+    return arr.length + 1;
+}
+
+// Example usage:
+const arr1 = [1, 2, 3, 4, 5];
+console.log(smallestMissingPositive(arr1)); // Output: 6
+
+const arr2 = [0, -10, 1, 3, -20];
+console.log(smallestMissingPositive(arr2)); // Output: 2
+
+```
+
+
+
+
+
 &#x20;\
+\
 \
