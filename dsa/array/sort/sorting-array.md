@@ -25,7 +25,7 @@ In this tutorial, we will see three of such in-place sorting algorithms, namely:
 \
 &#x20;
 
-#### Insertion Sort
+#### <mark style="background-color:red;">Insertion Sort</mark>
 
 \
 Insertion Sort is an In-Place sorting algorithm. This algorithm works in a similar way of sorting a deck of playing cards. \
@@ -65,7 +65,7 @@ Let us loop for i = 1 (second element of the array) to 4 (Size of input array - 
   \
   &#x20;
 
-#### Bubble Sort
+#### <mark style="background-color:green;">Bubble Sort</mark>
 
 \
 Bubble Sort is also an in-place sorting algorithm. This is the simplest sorting algorithm and it works on the principle that:\
@@ -86,7 +86,31 @@ Bubble-Sort algorithm simply repeats the above steps N-1 times, where N is the s
 * **Second Pass:** ( **1** **4** 2 5 8 ) --> ( **1** **4** 2 5 8 ) ( 1 **4** **2** 5 8 ) --> ( 1 **2** **4** 5 8 ), Swap since 4 > 2 ( 1 2 **4** **5** 8 ) --> ( 1 2 **4** **5** 8 ) ( 1 2 4 **5** **8** ) -->  ( 1 2 4 **5** **8** ) Now, the array is already sorted, but our algorithm does not know if it is completed. The algorithm needs one **whole** pass without **any** swap to know it is sorted.
 * **Third Pass:** ( **1** **2** 4 5 8 ) --> ( **1** **2** 4 5 8 ) ( 1 **2** **4** 5 8 ) --> ( 1 **2** **4** 5 8 ) ( 1 2 **4** **5** 8 ) --> ( 1 2 **4** **5** 8 ) ( 1 2 4 **5** **8** ) --> ( 1 2 4 **5** **8** )
 
-#### Selection Sort
+```javascript
+function bubbleSort(arr, n) {
+    let swapped = false;
+    for(let i = 0;i < n; i++){
+        swapped = false;
+        for(let j = 0 ; j < n - i -1; j++){
+            if( arr[j] > arr[j+1]){
+                [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+                swapped = true;
+            }
+        }
+        
+        if( swapped === false) break;
+    }
+    return arr;
+}
+
+let a = [2, 1, 3, 4];
+a = bubbleSort(a, 4);
+console.log(a);
+```
+
+
+
+#### <mark style="background-color:green;">Selection Sort</mark>
 
 \
 The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning. The algorithm maintains two subarrays in a given array.\
@@ -126,6 +150,39 @@ Stability in Sorting Algorithm
 ***
 
 Stability is mainly essential when we have key-value pairs with duplicate keys possible (like people's names as keys and their details as values). And we wish to sort these objects by keys.
+
+
+
+<figure><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20220203094305/Selection-Sort-Flowhchart.png" alt=""><figcaption></figcaption></figure>
+
+#### Approach:
+
+* Initialize minimum value(min\_idx) to location 0
+* Traverse the array to find the minimum element in the array
+* While traversing if any element smaller than **min\_idx** is found then swap both the values.
+* Then, increment min\_idx to point to next element
+* Repeat until array is sorted
+
+```javascript
+function selectionSort(arr, n) {
+    for(let i = 0; i < n; i++){
+        let min_ind = i;
+        for(let j = i + 1; j < n; j++){
+            if(arr[j] < arr[min_ind]){
+                min_ind = j;
+            }
+        }
+        [arr[i], arr[min_ind]] = [arr[min_ind], arr[i]];
+    }
+    return arr;
+}
+
+let a = [2, 1, 3, 4];
+a = selectionSort(a, 4);
+console.log(a);
+```
+
+
 
 <mark style="color:red;">**Quicksort**</mark><mark style="color:red;">:</mark> Quicksort is generally considered one of the fastest sorting algorithms for most practical data sets. It has an average-case time complexity of O(n log n) and performs well on average and best-case scenarios. However, in the worst-case scenario (e.g., if the pivot selection is poor), it can degrade to O(n^2).
 
